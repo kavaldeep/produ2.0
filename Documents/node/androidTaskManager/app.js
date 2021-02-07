@@ -13,5 +13,8 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
 
+app.get('/', (req  , res ) => {
+  res.send("Welcome Here")
+})
 
 
