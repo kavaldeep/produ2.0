@@ -9,6 +9,10 @@ app.get('/start', (req  , res ) => {
   res.send("Welcome Here")
 })
 
+app.get('/', (req , res) => {
+  res.send("Here is the first Page")
+} )
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
