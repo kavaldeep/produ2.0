@@ -13,6 +13,5 @@ app.get('/', (req , res) => {
   res.send("Here is the first Page")
 } )
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`)
-})
+app.listen(process.env.PORT || 3000, 
+	() => console.log("Server is running..."));
