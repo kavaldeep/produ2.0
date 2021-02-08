@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const task = require('../models/task')
 
 const saveTask = (task) => {
     mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
@@ -12,4 +13,11 @@ const saveTask = (task) => {
         console.log("Failed To Save")
     })
 }
+
+const postSave = (req) => {
+    
+}
+
+
+module.exports = saveTask
 
