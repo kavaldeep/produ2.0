@@ -16,7 +16,7 @@ app.get('/', (req , res) => {
 
 app.post('/create' , (req , res) =>{
   res.send("request Received well Done")
-  console.log(req.body.test)
+  console.log(req.body)
 })
 
 app.listen(process.env.PORT || 3000, 
