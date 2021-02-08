@@ -15,7 +15,7 @@ app.get('/', (req , res) => {
 } )
 
 app.post('/create' , (req , res) =>{
-  res.send("request Received well Done")
+  res.send(req.body)
   console.log(req.body)
 })
 
