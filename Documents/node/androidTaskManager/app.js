@@ -14,8 +14,9 @@ app.get('/', (req , res) => {
   res.send("Here is the first Page")
 } )
 
-app.post('/' , (req , res) =>{
+app.post('/create' , (req , res) =>{
   res.send("request Received well Done")
+  console.log(req.body)
 })
 
 app.listen(process.env.PORT || 3000, 
