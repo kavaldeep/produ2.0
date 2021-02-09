@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const Task = mongoose.model('Task', {
-    Descrption : {
+    Description : {
         type : String ,
         required: true,
         valdation: (value) => {
@@ -26,4 +26,5 @@ const Task = mongoose.model('Task', {
     }
 })
 
-module.exports = Task
+
+module.exports = Task 

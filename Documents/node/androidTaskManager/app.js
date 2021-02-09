@@ -20,8 +20,7 @@ app.get('/', (req , res) => {
 } )
 
 app.post('/create' , (req , res) =>{
-  res.send(req.body)
-  console.log(req.body)
+  mongoose.postSave(req)
 })
 
 
