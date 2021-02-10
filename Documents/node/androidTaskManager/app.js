@@ -20,6 +20,7 @@ app.get('/', (req , res) => {
 } )
 
 app.post('/create' , (req , res) =>{
+  conole.log("This is the Body :" ,  req.body)
   mongoose.postSave(req)
 })
 
