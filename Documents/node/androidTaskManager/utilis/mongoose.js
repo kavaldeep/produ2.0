@@ -23,14 +23,55 @@ const postSave = (req) => {
         DeadLine : Date.now(),
         State : req.body.State ,
         Duration : req.body.Duration,
+        CreationDate : Date.now()
     })
 
     saveTask(newTask)
 }
 
+const fetchDataByDate = (date , res )  => {
+    mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
+    useNewUrlParser : true , 
+    useCreateIndex : true 
+    })
+    //TODO Complete This Properly
+/*   
+    Task.find({ DeadLine : { "$gte" : "2021-02-11 ", "$lt" : "2021-02-12" } } , (err , data) => {
+        if(err){
+            console.log(err)
+        }else{
+        }
+    }) */
+
+}
+
+const fetchDataToday = (res) =>{
+    mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
+    useNewUrlParser : true , 
+    useCreateIndex : true 
+    })
+    
+    var dateToday = new Date()
+    var gte = dateToday.toISOString().split("T")[0]
+    var lte = datePlusOne(new Date())
+    console.log(gte , lte)
+
+    Task.find({CreationDate : { "$gte" : gte , "$lt": lte  }} , (err , data ) => {
+        if(err){
+            console.log(err)
+        }else{
+            res.send(data)
+        }
+    })
+    
+    
+}
+
+const datePlusOne = (date) => {
+    date.setDate(date.getDate() + 1 )
+    return date.getFullYear() + "-" + (date.getMonth() + 1 ) + "-" + date.getDate() ;
+}
 
 
-
-
-module.exports = {saveTask , postSave}
+module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday}
 

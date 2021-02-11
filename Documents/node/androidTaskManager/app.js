@@ -22,8 +22,22 @@ app.get('/', (req , res) => {
 app.post('/create' , (req , res) =>{
   console.log("This is the Body :" ,  req.body)
   mongoose.postSave(req)
+  res.send("attempt To Save")
 })
 
+app.post('/fetchByDate' , (req , res) => {
+
+  console.log(req.body.Date)
+  mongoose.fetchDataByDate(req.body.Date , res)
+  res.send("recived")
+
+})
+
+app.post('/fetchToDay' , (req , res) => {
+
+  console.log("Fetching for today")
+  mongoose.fetchDataToday(res)
+})
 
 
 app.listen(process.env.PORT || 3000, 
