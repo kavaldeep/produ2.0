@@ -74,7 +74,7 @@ const deleteById = (req , res) =>{
     useCreateIndex : true 
     })
 
-    Task.find({_id : mongoose.Types.ObjectId(req.body.id)} , (err , data)=> {
+    Task.find({_id : mongoose.Types.ObjectId(req.body._id)} , (err , data)=> {
         if(err){
             console.log(err)
         }else{
@@ -82,7 +82,8 @@ const deleteById = (req , res) =>{
         }
     })
     
-    Task.deleteOne({_id :  mongoose.Types.ObjectId(req.body.id)} , (err , result) =>{
+    Task.deleteOne({_id :  mongoose.Types.ObjectId(req.body._id)} , (err , result) =>{
+        console.log(req.body._id);
         if(err){
             res.send("unable To Delete")
         }else{
