@@ -40,5 +40,11 @@ app.post('/fetchToDay' , (req , res) => {
 })
 
 
+app.post('/delete' , (req , res) =>
+{
+  console.log("Asking To Delte")
+  mongoose.deleteById(req , res) 
+})
+
 app.listen(process.env.PORT || 3000, 
 	() => console.log("Server is running..."));

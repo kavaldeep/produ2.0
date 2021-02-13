@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose  = require('mongoose')
 const Task = require('../models/task')
 
 const saveTask = (task) => {
@@ -67,11 +67,27 @@ const fetchDataToday = (res) =>{
     
 }
 
+
+const deleteById = (req , res) =>{
+    mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
+    useNewUrlParser : true , 
+    useCreateIndex : true 
+    })
+    
+    Task.deleteOne({_id :  mongoose.Types.ObjectId(req.body.id)} , (err) =>{
+        if(err){
+            res.send("unable To Delete")
+        }else{
+            res.send("Succes Delete")
+        }
+    })
+}
+
 const datePlusOne = (date) => {
     date.setDate(date.getDate() + 1 )
     return date.getFullYear() + "-" + (date.getMonth() + 1 ) + "-" + date.getDate() ;
 }
 
 
-module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday}
+module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday , deleteById}
 
