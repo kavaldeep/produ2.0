@@ -73,12 +73,21 @@ const deleteById = (req , res) =>{
     useNewUrlParser : true , 
     useCreateIndex : true 
     })
+
+    Task.find({_id : mongoose.Types.ObjectId(req.body.id)} , (err , data)=> {
+        if(err){
+            console.log(err)
+        }else{
+            console.log(data)
+        }
+    })
     
-    Task.deleteOne({_id :  mongoose.Types.ObjectId(req.body.id)} , (err) =>{
+    Task.deleteOne({_id :  mongoose.Types.ObjectId(req.body.id)} , (err , result) =>{
         if(err){
             res.send("unable To Delete")
         }else{
             res.send("Succes Delete")
+            console.log(result)
         }
     })
 }
