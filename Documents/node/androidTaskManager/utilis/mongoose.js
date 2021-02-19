@@ -103,7 +103,7 @@ const updateById = (req , res) => {
     console.log(req.body._id)
     Task.updateOne({_id :mongoose.Types.ObjectId(req.body._id)} , ({$set : { Description : req.body.Description , 
         Priority : Number(req.body.Priority),
-        DeadLine : req.body.DeadLine,
+        DeadLine : stringToDate(req.body.DeadLine) ,
         State : req.body.State ,
         Duration : req.body.Duration,
         CreationDate : Date.now() , 
@@ -122,6 +122,11 @@ const updateById = (req , res) => {
 const datePlusOne = (date) => {
     date.setDate(date.getDate() + 1 )
     return date.getFullYear() + "-" + (date.getMonth() + 1 ) + "-" + date.getDate() ;
+}
+
+const stringToDate = (date) =>{
+    var parts = date.split('-');    
+    return new Date(parts[0], parts[1] - 1, parts[2])
 }
 
 
