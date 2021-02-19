@@ -46,5 +46,11 @@ app.post('/delete' , (req , res) =>
   mongoose.deleteById(req , res) 
 })
 
+app.post('/update' , (req , res) => 
+{
+  console.log("Asking to update")
+  mongoose.updateById(req , res)
+})
+
 app.listen(process.env.PORT || 3000, 
 	() => console.log("Server is running..."));

@@ -93,11 +93,37 @@ const deleteById = (req , res) =>{
     })
 }
 
+const updateById = (req , res) => {
+    
+    mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
+    useNewUrlParser : true , 
+    useCreateIndex : true 
+    })
+
+    console.log(req.body._id)
+    Task.updateOne({_id :mongoose.Types.ObjectId(req.body._id)} , ({$set : { Description : req.body.Description , 
+        Priority : Number(req.body.Priority),
+        DeadLine : req.bodyDeadLine,
+        State : req.body.State ,
+        Duration : req.body.Duration,
+        CreationDate : Date.now() , 
+    }}) , (err , result) =>{
+        if(err)
+        {
+            console.log(err)
+        }else{
+            console.log(result)
+        }
+    }) 
+
+    res.send("update Request Recived");
+
+}
 const datePlusOne = (date) => {
     date.setDate(date.getDate() + 1 )
     return date.getFullYear() + "-" + (date.getMonth() + 1 ) + "-" + date.getDate() ;
 }
 
 
-module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday , deleteById}
+module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday , deleteById , updateById}
 
