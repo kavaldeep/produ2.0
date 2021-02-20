@@ -126,9 +126,12 @@ const datePlusOne = (date) => {
 
 const stringToDate = (date) =>{
     var parts = date.split('-');    
-    return new Date(parts[0], parts[1] - 1, parts[2])
+    var  date = new Date();
+    date.setDate(parts[0]);
+    date.setYear(parts[2]);
+    date.setMonth(parts[1]);
+    return date;
 }
-
 
 module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday , deleteById , updateById}
 
