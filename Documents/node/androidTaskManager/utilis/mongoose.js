@@ -101,7 +101,7 @@ const updateById = (req , res) => {
     })
 
     console.log(req.body._id)
-    console.log(stringToDate(req.body.DeadLine))
+    console.log(req.body.DeadLine)
     Task.updateOne({_id :mongoose.Types.ObjectId(req.body._id)} , ({$set : { Description : req.body.Description , 
         Priority : Number(req.body.Priority),
         DeadLine : stringToDate(req.body.DeadLine) ,
