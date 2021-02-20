@@ -20,7 +20,7 @@ const postSave = (req) => {
     const newTask = new Task({
         Description :  req.body.Description ,
         Priority : Number(req.body.Priority),
-        DeadLine : Date.now(),
+        DeadLine : stringToDate(req.body.DeadLine) ,
         State : req.body.State ,
         Duration : req.body.Duration,
         CreationDate : Date.now()
