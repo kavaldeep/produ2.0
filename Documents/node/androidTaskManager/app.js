@@ -3,6 +3,7 @@ const express = require('express');
 const app = express()
 const bodyParser  = require('body-parser');
 const mongoose = require('./utilis/mongoose')
+const monAnalytics = require('./utilis/monAnalytics')
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -55,7 +56,7 @@ app.post('/update' , (req , res) =>
 app.post('/updateTime' , (req , res) => {
   console.log("Asking To update the Time for the id : " ,  req.body._id)
   console.log(req.body)
-  updateTime(req)
+  monAnalytics.updateTime(req)
 })
 app.listen(process.env.PORT || 3000, 
 	() => console.log("Server is running..."));
