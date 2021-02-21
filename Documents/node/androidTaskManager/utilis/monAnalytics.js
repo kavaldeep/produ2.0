@@ -34,7 +34,7 @@ const create = (id) => {
         })
     }
     
-    const updateTime = (req , res) => {
+const updateTime = (req , res) => {
         mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
         useNewUrlParser : true , 
         useCreateIndex : true 
@@ -59,19 +59,18 @@ const create = (id) => {
         })
 }
 
+const fetchData = (req , res) => {
+    mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
+        useNewUrlParser : true , 
+        useCreateIndex : true 
+        })
 
-
-/* const sae = new startAndEndModel({
-        startTime: Date.now(),
-        endTime:Date.now()
-})
-    
-const finaltime = new workAnalyticsModel({
-        workHistory:[sae]
-})
- */    
-
-
-module.exports  = {create , updateTime , saveData} 
+        workAnalyticsModel.findOne({ _id : mongoose.Types.ObjectId(req.body._id)}).then((result) => {
+            res.send(result)
+        }).catch((error) => {
+            res.send(error)
+        })
+}
+module.exports  = {create , updateTime , saveData , fetchData} 
 
 
