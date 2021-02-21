@@ -1,5 +1,6 @@
 const mongoose  = require('mongoose')
 const Task = require('../models/task')
+const monAnalytics = require('../utilis/monAnalytics')
 
 const saveTask = (task) => {
     mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
@@ -8,7 +9,8 @@ const saveTask = (task) => {
     })
 
     task.save().then((result) => {
-        console.log("succes")
+        console.log(result)
+        monAnalytics.create(result._id)
     }).catch((error) => {
         console.log("Failed To Save")
         console.log(error)
