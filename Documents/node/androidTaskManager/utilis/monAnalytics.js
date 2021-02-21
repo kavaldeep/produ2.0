@@ -34,17 +34,20 @@ const create = (id) => {
         })
     }
     
-    const updateTime = (id , data) => {
+    const updateTime = (req) => {
         mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
         useNewUrlParser : true , 
         useCreateIndex : true 
         })
 
         workAnalyticsModel.updateOne({
-           _id : mongoose.Types.ObjectId(id)
+           _id : mongoose.Types.ObjectId(req.body._id)
         },{
             "$push":{
-                workHistory:data
+                workHistory: new startAndEndModel({
+                    startTime : req.body.startTime , 
+                    endTime: req.body.endTime
+                })
             }
         }
         ).then((result) => {

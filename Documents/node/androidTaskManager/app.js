@@ -52,5 +52,10 @@ app.post('/update' , (req , res) =>
   mongoose.updateById(req , res)
 })
 
+app.post('/updateTime' , (req , res) => {
+  console.log("Asking To update the Time for the id : " ,  req.body._id)
+  console.log(req.body)
+  updateTime(req)
+})
 app.listen(process.env.PORT || 3000, 
 	() => console.log("Server is running..."));
