@@ -34,7 +34,7 @@ const create = (id) => {
         })
     }
     
-    const updateTime = (req) => {
+    const updateTime = (req , res) => {
         mongoose.connect('mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority' , {
         useNewUrlParser : true , 
         useCreateIndex : true 
@@ -52,8 +52,10 @@ const create = (id) => {
         }
         ).then((result) => {
             console.log(result)
+            res.send("time Info Saved ")
         }).catch((err) => {
             console.log(err)
+            res.send("Unable To Save")
         })
 }
 
