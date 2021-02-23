@@ -59,10 +59,15 @@ app.post('/updateTime' , (req , res) => {
   monAnalytics.updateTime(req , res ) 
 })
 
+
 app.post('/fetchDataTime' , (req , res) => {
   console.log("Asking for fetch dataTime for the id :")
   monAnalytics.fetchData(req , res)
 })
 
+app.post('chartTody' , (res) => {
+  console.log("Asking for chart Today ")
+  monAnalytics.chartToday(res)
+})
 app.listen(process.env.PORT || 3000, 
 	() => console.log("Server is running..."));
