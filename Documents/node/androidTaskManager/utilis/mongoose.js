@@ -136,5 +136,5 @@ const stringToDate = (date) =>{
     return date;
 }
 
-module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday , deleteById , updateById , datePlusOne}
+module.exports = {saveTask , postSave , fetchDataByDate , fetchDataToday , deleteById , updateById , datePlusOne , stringToDate}
 

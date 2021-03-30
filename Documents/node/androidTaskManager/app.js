@@ -4,6 +4,7 @@ const app = express()
 const bodyParser  = require('body-parser');
 const mongoose = require('./utilis/mongoose')
 const monAnalytics = require('./utilis/monAnalytics')
+const dateFormat = require('dateformat');
 
 const hostname = '127.0.0.1';
 const port = 3000;
@@ -65,9 +66,17 @@ app.post('/fetchDataTime' , (req , res) => {
   monAnalytics.fetchData(req , res)
 })
 
-app.post('chartTody' , (res) => {
+app.post('/chartToday' , (req , res) => {
   console.log("Asking for chart Today ")
-  monAnalytics.chartToday(res)
+//  console.log(dateFormat(new Date() , "dd-mm-yyyy h:MM:ss"))
+  req.body.date = dateFormat(new Date() , "dd-mm-yyyy")
+  monAnalytics.chartDate( req , res);
+})
+
+app.post('/chartDate' , (req , res) => {
+  console.log("asking for chart date  "  , req.body.date);
+  monAnalytics.chartDate(req , res );
 })
 app.listen(process.env.PORT || 3000, 
-	() => console.log("Server is running..."));
+  () => console.log("Server is running..."));
+  
