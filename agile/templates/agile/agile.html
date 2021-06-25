@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+
+<!-- Modal Faire delete -->
+  {% now "Y-m-d" as todays_date %}
+  {% for tache in listTache %}
+  {% if tache.State == "ToDo" or tache.State == "InProgress" %}
+<!-- What the fuck is this this is the model delete confirmation   -->
+    <div class="modal fade" id = '{{tache.id}}' tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{tache.Description}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action = "/tache_app/tache_delete/" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="pk" value="{{tache.id}}"/>
+              <input type="submit" value = "Supprimer">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if tache.Etat == "Finis" and todays_date == tache.Deadline|date:"Y-m-d" %}
+    <div class="modal fade" id = '{{tache.id}}' tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            {{tache.Description}}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <form action = "/tache_app/tache_delete/" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="pk" value="{{tache.id}}"/>
+              <input type="submit" value = "Supprimer">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {%endif%}
+  {% endfor %}
+
+   
+  <html>
+    {% load static %}
+  <head>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'agile/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'agile/rotate.css' %}">
+  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+    <title> Methode Agile  </title>
+  </head>
+
+  <body>
+              <div class="wrapper">
+
+                <nav id="sidebar">
+                    <!-- Sidebar Header -->
+                    <div class="sidebar-header">
+                        <h3>AGILE</h3>
+                    </div>
+
+                    <!-- Sidebar Links -->
+                    <ul class="list-unstyled components">
+                        <li class="active"><a href="{% url 'tache' %}">Acceuil</a></li>
+                        <li><a href="#">Chronos</a></li>
+                        <li><!-- Link with dropdown items -->
+                            <a href="#GrapheSubmenu" data-toggle="collapse" aria-expanded="false">Graphe</a>
+                            <ul class="collapse list-unstyled" id="GrapheSubmenu">
+                                <li><a href="{% url 'chart' %}">Aujourd'hui</a></li>
+                                <li><a href="{% url 'chartMonth' %}">30 derniers jours </a></li>  
+                            </ul>
+                          </li>
+                        <li><!-- Link with dropdown items -->
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Taches</a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                                <li><a href="#">A Faire</a></li>
+                                <li><a href="#">En Cours</a></li>
+                                <li><a href="#">Finis</a></li>
+                            </ul>
+                          </li>
+
+                    </ul>
+                </nav>
+
+                <div id="content">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+
+                    <nav class="navbar navbar-light bg-light">
+                      <form class="form-inline">
+             
+                             <a class="btn btn-outline-secondary" href="" role="button" data-toggle="modal"  data-target = "#AddTacheForm">Nouvelle Tache</a>
+                
+                             <div class="modal" tabindex="-1" id = "AddTacheForm"  data-backdrop="false">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title">Ajouter une nouvelle Tache  </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">                                      
+                                       {{ajouter_tache.Contenue}}                           
+                                       {{ajouter_tache.Etat}}                               
+                                       {{ajouter_tache.TempsAConsacrer}}
+                                  </div>
+                                  <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                    {% csrf_token %}
+                                    <button type="submit" formaction="/tache_app/tache_ajouter/" formmethod="POST" class="btn btn-primary">Ajouter</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            </form>
+                    </nav>
+
+                    <div id = "principale" >
+                        <div id = "AFaire" ondrop="dragDrop(event , 'AFaire')">
+                            <h1> A faire </h1>
+                            <div class="card-columns">
+                            {% for tache in listTache %}
+                              {% if tache.State == "ToDo"%}
+                              <div class="card-container"  >
+                                    <div class = "card-front"  draggable="true" ondragstart="dragStart(event ,' {{ tache.id }}')">
+                                      <div class="card text-white bg-warning mb-3" style="max-width: 18rem;">
+                                      <div class="card-header">DeadLine:  {{tache.Deadline}}</div>
+                                      <div class="card-body">
+                                        <p class="card-text">{{tache.Description}}</p>
+                                      </div><!-- div card-front end -->
+                                      </div>
+                                    </div>
+                                    <div class="footer">
+                                      <button class = "button" onclick="location.href='/agile'" type="btn"><i class=" fas fa-edit"></i></button>
+                                      <!-- <button class = "button" onclick="location.href='/agile'" type="btn"><i class="fas fa-trash-alt"></i></button>  -->
+                                      <!-- Button trigger modal -->
+                                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{tache.id}}">
+                                  Supprimer
+                                </button>
+                                  </div><!-- div footer end -->
+                                </div> <!-- div card-container end -->
+                            {% endif %}
+                            {% endfor %}
+                            </div><!-- div card-columns end -->
+                     </div><!-- div A Faire end -->
+
+                        <div id = "EnCours"   ondrop="dragDrop(event , 'EnCours')">
+                          <h1> En Cours </h1>
+                          <div class="card-columns">
+                          {% for tache in listTache %}
+                            {% if tache.State == "InProgress"%}
+                            <div class="card-container" >
+                                  <div class = "card-front" draggable="true" ondragstart="dragStart(event , '{{ tache.id }}')">
+                                    <div class="card text-white bg-primary mb-3" style="max-width: 18rem;">
+                                    <div class="card-header">DeadLine:  {{tache.Deadline}}</div>
+                                    <div class="card-body">
+                                      <p class="card-text">{{tache.Description}} {{tache.id}} </p>
+                                    </div><!-- div card-front end -->
+                                    </div>
+                                  </div>
+                                  <div class="footer">
+                                    <button class = "button" onclick="" type="btn"><i class=" fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{tache.id}}">
+                                    Supprimer
+                                    </button>
+                                    <button class = "button" onclick="location.href='/agile'" type="btn"><i class="fas fa-stopwatch-20"></i></button>
+
+                                   </div><!-- div footer end -->
+                              </div> <!-- div card-container end -->
+                          {% endif %}
+                          {% endfor %}
+                          </div><!-- div card-columns end -->
+                      </div>
+                      {% now "Y-m-d" as todays_date %}
+                        <div id = "Finis" ondrop="dragDrop(event , 'Finis')"  >
+                          <h1> Finis </h1>
+                          <div class="card-columns">
+                          {% for tache in listTache %}
+                            {% if tache.State == "Finish"%}
+                            <div class="card-container">
+                                  <div class = "card-front" draggable="true" ondragstart="dragStart(event , '{{ tache.id }}')">
+                                    <div class="card text-white bg-success mb-3" style="max-width: 18rem;">
+                                    <div class="card-header">DeadLine:  {{tache.Deadline}}</div>
+                                    <div class="card-body">
+                                      <p class="card-text">{{tache.Description}}</p>
+                                    </div>
+                                      <div class="card-footer bg-transparent">FinishDate:  {{tache.FinishDate}}</div>
+                                    </div>
+                                  </div><!-- div card-front end -->
+                                  <div class="footer">
+                                    <button class = "button" onclick="location.href='/agile/'" type="btn"><i class=" fas fa-edit"></i></button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#{{tache.id}}">
+                                      Supprimer
+                                      </button>
+                                  </div> <!-- div footer end -->
+                              </div> <!-- div card-container end -->
+
+                          {% endif %}
+                          {% endfor %}
+                          </div><!-- div card-columns end -->
+                        </div>
+
+                      </div>
+
+
+              </div>
+
+
+
+  
+            <!-- Modal -->
+      <!-- jQuery CDN - Slim version (=without AJAX) -->
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <!-- Popper.JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <!-- Bootstrap JS -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+      <script>
+              $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+          });
+
+      </script>
+  </body>
+
+
+  <script
+  			  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  			  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  			  crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+<script src="{% static 'agile/script.js' %}"></script>
+</html>
+
