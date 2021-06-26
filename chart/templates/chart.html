@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+
+  <head>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'chart/style.css' %}">
+
+    <title>Charts</title>
+  </head>
+  <body>
+
+    <div class="wrapper">
+
+              <nav id="sidebar">
+                  <!-- Sidebar Header -->
+                  <div class="sidebar-header">
+                      <h3>AGILE</h3>
+                  </div>
+
+                  <!-- Sidebar Links -->
+               <ul class="list-unstyled components">
+                        <li class="active"><a href="{% url 'tache' %}">Acceuil</a></li>
+                        <li><a href="#">Chronos</a></li>
+                        <li><!-- Link with dropdown items -->
+                            <a href="#GrapheSubmenu" data-toggle="collapse" aria-expanded="false">Graphe</a>
+                            <ul class="collapse list-unstyled" id="GrapheSubmenu">
+                                <li><a href="{% url 'chart' %}">Aujourd'hui</a></li>
+                                <li><a href="{% url 'chartMonth' %}">30 derniers jours </a></li>  
+                            </ul>
+                          </li>
+                        <li><!-- Link with dropdown items -->
+                            <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Taches</a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                                <li><a href="#">A Faire</a></li>
+                                <li><a href="#">En Cours</a></li>
+                                <li><a href="#">Finis</a></li>
+                            </ul>
+                          </li>
+
+                    </ul>
+              </nav>
+
+              <div id="content">
+                  <button type="button" id="sidebarCollapse" class="navbar-btn">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                  </button>
+                <div class="chart-container" >
+                    <canvas id="myChart"></canvas>
+                </div>
+              </div>           
+
+  </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <!-- Bootstrap JS -->
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script>
+ $(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+       $(this).toggleClass('active');
+    });
+  });
+
+
+data = {
+    labels: {{ labels }},
+    datasets: [{
+    fill:true,
+    lineTension: 0.05,
+    borderColor: "#ea0e0e",
+    data: {{ values }},
+   }] 
+  }  ;
+
+options= {
+
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    max:24                    
+                }
+            }]
+        }
+    }
+
+
+var ctx = document.getElementById('myChart');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data:{
+      labels:{{ labels }},
+      datasets: [{
+        label:"Number of hours",
+        fill:true,
+        lineTension:0.05,
+        borderColor: "#68e674",
+        data: {{values}},
+
+      }, 
+      {
+        label:"minimum" ,
+        fill:'false',
+        data:Array(24).fill(6),
+        borderColor:"#ea0e0e",
+
+      } , 
+      {
+        label:"objectif" ,
+        fill:'false',
+        data:Array(24).fill(10),
+        borderColor:"#24137c",
+
+      }
+
+      ]
+
+    },
+
+    options:{
+
+        scales:{
+          yAxes: [{
+            ticks:{
+              beginAtZero:true,
+              max:24,
+            }
+          }]
+        }
+
+    }
+
+});
+
+
+</script>
+
+</html>

@@ -1,0 +1,57 @@
+
+    
+<!DOCTYPE html>
+<html>
+  {% load static %}
+
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="{% static 'agile/style.css' %}">
+    <title> Methode Agile </title>
+  </head>
+
+  <body>
+    <div id = 'Principale'>
+      <div id = "Faire">
+        <h1> A faire </h1>
+        {% for tache in listTache %}
+            {% if tache.Etat == "A faire" %}
+            <p> {{ tache.Contenue }} </p>
+	    <a href = "{% url 'TacheUpdate' pk=tache.id %}"><button type="button">Editer </button></a>
+	    <a href = "{% url 'TacheDelete' pk=tache.id %}"><button type="button">Supprimer </button></a>
+        {% endif %}
+        {% endfor %}
+	
+	<a href = "{% url 'TacheCreate'%}"><button type="button">Ajouter Tache </button></a>
+
+      </div>
+
+      <div id = "EnCours">
+        <h1> EnCours </h1>
+        {% for tache in listTache %}
+            {% if tache.Etat == "En Cours" %}
+            <p> {{ tache.Contenue }} </p>
+
+	    <a href = "{% url 'TacheUpdate' pk=tache.id %}"><button type="button">Editer </button></a>
+	    <a href = "{% url 'TacheDelete' pk=tache.id %}"><button type="button">Supprimer </button></a>    
+            {% endif %}
+        {% endfor %}
+
+      </div>
+
+      <div id = "Finis">
+        <h1> Finis </h1>
+        {% for tache in listTache %}
+            {% if tache.Etat == "Finis" %}
+            <p> {{ tache.Contenue }} </p>
+
+	    <a href = "{% url 'TacheUpdate' pk=tache.id %}"><button type="button">Editer </button></a>
+	    <a href = "{% url 'TacheDelete' pk=tache.id %}"><button type="button">Supprimer </button></a>    
+            {% endif %}
+        {% endfor %}
+      </div>
+     
+    </div>
+
+  </body>
+</html>

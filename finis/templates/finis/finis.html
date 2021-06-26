@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="fr">
+    {% load static %}
+<head>
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+</head>
+<body>
+  <p>
+
+     {% now "Y-m-d" as todays_date  %}
+      {% for elem in TachesFinis %}
+          {% if todays_date == elem.FinishDate|date:"Y-m-d" %}
+            <p> {{ elem.Contenue}}</p>
+          {% endif %}
+
+      {%  endfor %}
+  </p>
+</body>
+</html>

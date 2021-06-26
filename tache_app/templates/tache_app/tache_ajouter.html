@@ -1,0 +1,7 @@
+{% if envoie %} Votre Tache a ete bien enregistrer dans notre base de donnees ! {% endif %}
+
+<form action = "{% url "tache_ajouter"  %}" method = "post">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type = "submit" value = "Submit" />
+</form>

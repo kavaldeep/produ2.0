@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+
+
+  <head>
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'agile/style.css' %}">
+    <script src="{% static 'style.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <title> Methode Agile </title>
+  </head>
+
+  <body>
+    <div id = 'Principale'>
+      <div id = "Faire">
+        <h1> A faire </h1>
+        {% for tache in listTache %}
+            {% if tache.Etat == "A faire" %}
+            <p> {{ tache.Contenue }} </p>
+	    <button class = "button" onclick="location.href='{% url 'TacheUpdate' pk=tache.id %}'" type="btn"><i class=" fas fa-edit"></i></button>
+	    <button class = "button" onclick="location.href='{% url 'TacheDelete' pk=tache.id %}'" type="btn"><i class="fas fa-trash-alt"></i></button>
+
+	    <a id = "ChangeToEnCours" ><button type="button" onClick="ChangeToEnCours({{tache.id}})">ChangeToEnCours </button></a>
+	    <a id = "ChangeToFinis" ><button type="button" onClick="ChangeToFinis({{tache.id}})">ChangeToFinis </button></a>
+        {% endif %}
+        {% endfor %}
+	
+
+	<button id = "fixedButton" class = "button" onclick="location.href='{% url 'TacheCreate' %}'" type="btn"><i class="far fa-plus-square"></i></button>
+      </div>
+
+      <div id = "EnCours">
+        <h1> EnCours </h1>
+        {% for tache in listTache %}
+            {% if tache.Etat == "En Cours" %}
+
+	
+            <p> {{ tache.Contenue }} </p>
+		
+	    <button class = "button" onclick="location.href='{% url 'TacheUpdate' pk=tache.id %}'" type="btn"><i class=" fas fa-edit"></i></button>
+	    <button class = "button" onclick="location.href='{% url 'TacheDelete' pk=tache.id %}'" type="btn"><i class="fas fa-trash-alt"></i></button>
+	    <button class = "button" onclick="location.href='{% url 'countdownTache' pk=tache.id %}'" type="btn"><i class="fas fa-stopwatch-20"></i></button>
+
+	    <a id = "ChangeToFinis" ><button type="button" onClick="ChangeToFinis({{tache.id}})">ChangeToFinis </button></a>
+	    <a id = "ChangeToAFaire" ><button type="button" onClick="ChangeToAFaire({{tache.id}})">ChangeToAFaire </button></a>	        
+            {% endif %}
+        {% endfor %}
+
+      </div>
+
+      <div id = "Finis">
+        <h1> Finis </h1>
+        {% for tache in listTache %}
+            {% if tache.Etat == "Finis" %}
+            <p><i id = "check" class="fas fa-check"></i> {{ tache.Contenue }} </p>
+
+	    <button class = "button" onclick="location.href='{% url 'TacheUpdate' pk=tache.id %}'" type="btn"><i class=" fas fa-edit"></i></button>
+	    <button class = "button" onclick="location.href='{% url 'TacheDelete' pk=tache.id %}'" type="btn"><i class="fas fa-trash-alt"></i></button>
+	    <a id = "ChangeToAFaire" ><button type="button" onClick="ChangeToAFaire({{tache.id}})">ChangeToAFaire </button></a>
+	    <a id = "ChangeToEnCours" ><button type="button" onClick="ChangeToEnCours({{tache.id}})">ChangeToEnCours</button></a>
+            {% endif %}
+        {% endfor %}
+      </div>
+     
+    </div>
+
+  </body>
+<script>
+
+
+function ChangeToEnCours(pk)
+{
+
+$.ajax({
+   type: "POST",
+   url: "http://127.0.0.1:8000/tache_app/ChangeToEnCours",
+   dataType: "json",
+   traditional: true,
+   data: {'pk' :pk },
+   success: function(data) {
+	   window.location.reload(true);	     
+           console.log(data["HTTPRESPONSE"]);
+   			   }
+  });
+}
+
+function ChangeToAFaire(pk)
+{
+
+$.ajax({
+   type: "POST",
+   url: "http://127.0.0.1:8000/tache_app/ChangeToAFaire",
+   dataType: "json",
+   traditional: true,
+   data: {'pk' :pk },
+   success: function(data) {  
+	   window.location.reload(true);
+           console.log(data["HTTPRESPONSE"]);
+   			   }
+  });
+}
+
+function ChangeToFinis(pk)
+{
+
+$.ajax({
+   type: "POST",
+   url: "http://127.0.0.1:8000/tache_app/ChangeToFinis",
+   dataType: "json",
+   traditional: true,
+   data: {'pk' :pk },
+   success: function(data) {  
+	   window.location.reload(true);
+           console.log(data["HTTPRESPONSE"]);
+   			   }
+  });
+
+}
+</script>
+</html>
