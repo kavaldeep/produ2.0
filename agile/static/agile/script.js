@@ -7,7 +7,7 @@ const box = [enCours , finis , aFaire];
 let objectGrabID = null;
 
 //Put the url of the server here
-const urlTacheApp = "http://127.0.0.1:8000/tache_app/";
+const urlTacheApp = "https://testkavaldeep.azurewebsites.net/tache_app/";
 
 //base.addEventListener('dragstart' , dragStart);
 base.addEventListener('dragend'  , dragEnd);
