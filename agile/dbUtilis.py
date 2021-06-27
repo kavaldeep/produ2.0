@@ -4,14 +4,16 @@ from datetime import datetime
 from django.http import HttpResponse , HttpResponseRedirect
 from bson.objectid import ObjectId
 from django.views.decorators.csrf import csrf_exempt
+import json
 
 def getTasks():
     """
     Get The Tasks of today 
     """
     print("getting taks")
-    startDate = datetime(2021 , 6 , 8 , 0 , 0 , 0 )
-    endDate = datetime(2021 , 6 ,  9 , 0 , 0 , 0 )
+    startDate = datetime(int(datetime.today().year) , int(datetime.today().month) , int(datetime.today().day) , 0 , 0 , 0 )
+    endDate = datetime(int(datetime.today().year) , int(datetime.today().month) + 1  ,  int(datetime.today().day) , 0 , 0 , 0 )
+    print("Getting task of the start " + str(startDate) + " and the end date is " + str(endDate))
     client = MongoClient("mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority")
     db = client.toDoList
     collection = db["tasks"]
@@ -46,19 +48,23 @@ def deleteTask(request):
 def updateFinish(request):
     print("-------------------update TO finsih with id = " +  request.POST.get("pk"))
     getCollection().update_one({ "_id" : ObjectId(request.POST.get("pk").replace(" ", ""))} , {"$set" : {"State" : "Finish"} })    
-    return HttpResponseRedirect('/agile')
+    json_data = json.dumps({"HTTPRESPONSE":"ok"})
+    return HttpResponse(json_data)
 
 @csrf_exempt
 def updateInProgress(request):
     print("-------------------update To InProgress with id = " + request.POST.get("pk"))
     getCollection().update_one({ "_id" : ObjectId(request.POST.get("pk").replace(" ", ""))} , {"$set" : {"State" : "InProgress"} })    
-    return HttpResponseRedirect('/agile')
+    json_data = json.dumps({"HTTPRESPONSE":"ok"})
+    return HttpResponse(json_data)
 
+#This code is to much fucking self explantory as fuck OMG 
 @csrf_exempt
 def updateToDo(request):
     print("-------------------update To todo with id = " + request.POST.get("pk"))
     getCollection().update_one({ "_id" : ObjectId(request.POST.get("pk").replace(" ", ""))} , {"$set" : {"State" : "ToDo"} })    
-    return HttpResponseRedirect('/agile')
+    json_data = json.dumps({"HTTPRESPONSE":"ok"})
+    return HttpResponse(json_data)
 
 def updateTask():
     print("update task")

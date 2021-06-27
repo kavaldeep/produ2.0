@@ -6,6 +6,9 @@ const box = [enCours , finis , aFaire];
 
 let objectGrabID = null;
 
+//Put the url of the server here
+const urlTacheApp = "http://127.0.0.1:8000/tache_app/";
+
 //base.addEventListener('dragstart' , dragStart);
 base.addEventListener('dragend'  , dragEnd);
 
@@ -67,13 +70,13 @@ function ChangeToEnCours(pk)
 
 $.ajax({
    type: "POST",
-   url: "http://127.0.0.1:8000/tache_app/updateTaskInProgress/",
+   url: urlTacheApp + "updateTaskInProgress/",
    dataType: "json",
    traditional: true,
    data: {'pk' :pk },
    success: function(data) {
 	   window.location.reload(true);
-           console.log(data["HTTPRESPONSE"]);
+           console.log( "The Http response is" + data["HTTPRESPONSE"]);
    			   }
   });
 }
@@ -83,13 +86,13 @@ function ChangeToAFaire(pk)
 
 $.ajax({
    type: "POST",
-   url: "http://127.0.0.1:8000/tache_app/updateTaskToDo/",
+   url:  urlTacheApp + "updateTaskToDo/",
    dataType: "json",
    traditional: true,
    data: {'pk' :pk },
    success: function(data) {
 	   window.location.reload(true);
-           console.log(data["HTTPRESPONSE"]);
+           console.log( "The Http response is" + data["HTTPRESPONSE"]);
    			   }
   });
 }
@@ -99,13 +102,13 @@ function ChangeToFinis(pk)
 
 $.ajax({
    type: "POST",
-   url: "http://127.0.0.1:8000/tache_app/updateTaskFinish/",
+   url: urlTacheApp +  "updateTaskFinish/",
    dataType: "json",
    traditional: true,
    data: {'pk' :pk },
    success: function(data) {
 	   window.location.reload(true);
-           console.log(data["HTTPRESPONSE"]);
+           console.log( "The Http response is" + data["HTTPRESPONSE"]);
    			   }
   });
 }
