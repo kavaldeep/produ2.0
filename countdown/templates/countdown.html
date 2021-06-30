@@ -1,4 +1,5 @@
 <!doctype html>
+
 <html>
   {% load static %}
 <head>
@@ -42,15 +43,16 @@
 <script >
   console.log("ca commence");
 //circle start
+CallAjaxGetTime();
 let progressBar = document.querySelector('.e-c-progress');
 let indicator = document.getElementById('e-indicator');
 let pointer = document.getElementById('e-pointer');
 let length = Math.PI * 2 * 100;
 progressBar.style.strokeDasharray = length;
 function update(value, timePercent) {
-	var offset = - length - length * value / (timePercent);
-	progressBar.style.strokeDashoffset = offset; 
-	pointer.style.transform = `rotate(${360 * value / (timePercent)}deg)`; 
+  var offset = - length - length * value / (timePercent);
+  progressBar.style.strokeDashoffset = offset; 
+  pointer.style.transform = `rotate(${360 * value / (timePercent)}deg)`; 
 };
 //circle ends
 const displayOutput = document.querySelector('.display-remain-time')
@@ -61,7 +63,8 @@ let timeLeft;
 /************code python *********************/
 /*Le temps par python est donner en float donc il faut convertir 
 ce temps en second pour le donner a l horloge */
-let TimeGivenByPython = {{time.seconds}} ;
+//let TimeGivenByPython = {{time.seconds}} ;
+let TimeGivenByPython = CallAjaxGetTime;
 let TimeGivenByPythonAbs  = Math.trunc(TimeGivenByPython);
 let TimeGivenByPythonDecimal = TimeGivenByPython - TimeGivenByPythonAbs;
 
@@ -168,7 +171,7 @@ function CallAjax(message , pk){
    url: "http://127.0.0.1:8000/tache_app/addToContenue",
    dataType: "json",
    traditional: true,
-   data: {'message': JSON.stringify(message) ,'pk' :JSON.stringify({{pk}}) },
+   data: {'message': JSON.stringify(message) ,'pk' :JSON.stringify("60dbe69e6aeb8fd0ba1a5860") },
    success: function(data) {  
            console.log(data["HTTPRESPONSE"]);
    }
@@ -184,12 +187,35 @@ function CallAjaxUpdateTime(timeLeft){
    url: "http://127.0.0.1:8000/tache_app/update_time/",
    dataType: "json",
    traditional: true,
-   data: {'pk' :JSON.stringify({{pk}}) , 'timeLeft' : JSON.stringify(timeLeft) },
+   data: {'pk' :JSON.stringify("60dbe69e6aeb8fd0ba1a5860") , 'timeLeft' : JSON.stringify(timeLeft) },
    success: function(data) {  
            console.log(data["HTTPRESPONSE"]);
    }
   });
 }
+
+function CallAjaxGetTime(){
+  alert("calling Method")
+  $.ajax({
+   type: "POST",
+   url: "http://127.0.0.1:8000/countdown/getTime",
+   dataType: "json",
+   traditional: true,
+   data: {'_id' :JSON.stringify("60dbe69e6aeb8fd0ba1a5860")},
+   success: function(data) {  
+           console.log(data);
+           if(data["HTTPRESPONSE"] == "ok")
+           {
+            return data["time"]
+           }
+           else
+           {
+            return "0:00"
+           }
+   }
+  });
+}
+
 
 pauseBtn.addEventListener('click',pauseTimer);
 

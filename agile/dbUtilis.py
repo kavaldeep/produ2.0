@@ -23,6 +23,10 @@ def getTasks():
         tasks.append(Task(x["Description"] , x['Priority'] , x['DeadLine'] , x['State'] , x['Duration'] , x['CreationDate'] , str(x['_id'])))
     return tasks
 
+def getTime(pk):
+    print("#Debug getting the time")
+    return getCollection().find_one({'_id' : ObjectId(pk)})
+
 
 def addTask(request):
 
