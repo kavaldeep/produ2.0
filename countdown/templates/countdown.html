@@ -64,7 +64,7 @@ let timeLeft;
 /*Le temps par python est donner en float donc il faut convertir 
 ce temps en second pour le donner a l horloge */
 //let TimeGivenByPython = {{time.seconds}} ;
-let TimeGivenByPython = 1000;
+let TimeGivenByPython = CallAjaxGetTime;
 let TimeGivenByPythonAbs  = Math.trunc(TimeGivenByPython);
 let TimeGivenByPythonDecimal = TimeGivenByPython - TimeGivenByPythonAbs;
 
@@ -201,9 +201,17 @@ function CallAjaxGetTime(){
    url: "http://127.0.0.1:8000/countdown/getTime",
    dataType: "json",
    traditional: true,
-   data: {'pk' :JSON.stringify("60dbe69e6aeb8fd0ba1a5860")},
+   data: {'_id' :JSON.stringify("60dbe69e6aeb8fd0ba1a5860")},
    success: function(data) {  
            console.log(data);
+           if(data["HTTPRESPONSE"] == "ok")
+           {
+            return data["time"]
+           }
+           else
+           {
+            return "0:00"
+           }
    }
   });
 }

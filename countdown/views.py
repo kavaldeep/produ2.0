@@ -7,7 +7,7 @@ from django.utils import timezone
 from datetime import timedelta
 from agile import dbUtilis
 from django.views.decorators.csrf import csrf_exempt
-
+import json
 
 # Create your views here.
 """
@@ -44,8 +44,16 @@ def launchCountDown(request):
 @csrf_exempt
 def postGetTime(request):
 	if(request.method == "POST"):
+		print(request.POST.get("_id"))
 		print("#it is a post request asking for the time")
+		json_data = json.dumps({"HTTPRESPONSE":"ok" , "time" : convertTimeToSeconds(dbUtilis.getTime(request.POST.get("_id").replace('"' , ""))["Duration"])})
 
+		return HttpResponse(json_data)
 
 	else:
 		return render(request , 'not a good method ')		
+
+
+def convertTimeToSeconds(time):
+	#format hh:mm
+	return int(time.split(":")[0]) * 60 * 60 + int(time.split(":")[1])*60 
