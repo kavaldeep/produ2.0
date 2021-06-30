@@ -24,7 +24,7 @@ def getTasks():
 
 def getTime(pk):
     print("#Debug getting the time")
-    return getCollection.find_one({'_id' : pk})
+    return getCollection().find_one({'_id' : ObjectId(pk)})
 
 
 def addTask(request):
