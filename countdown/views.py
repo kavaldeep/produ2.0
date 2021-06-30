@@ -4,6 +4,7 @@ from django.template.loader import get_template
 from tache_app.models import Tache
 from django.utils import timezone
 from datetime import timedelta
+
 # Create your views here.
 """
 j ai pas le choix je sui obligé de mutliplié TempsAConsacrer pour le mettre en secondes 
@@ -28,3 +29,7 @@ def countdownWith(request , pk):
 def lancerCompteur(request , pk ):
 	
 	return render(request , 'countdown.html' , {"time":Tache.objects.get(pk = pk ).TempsRestant , "pk" : pk})	
+
+
+def launchCountDown(req , pk):
+	#import mongodb utilis

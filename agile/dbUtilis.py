@@ -22,6 +22,11 @@ def getTasks():
     return tasks
 
 
+def getTime(pk):
+    print("#Debug getting the time")
+    return getCollection.find_one({'_id' : pk})
+
+
 def addTask(request):
 
     """
@@ -82,10 +87,10 @@ def convertState(state):
 
     return stateToReturn
 
-
 def getCollection():
     print("***********getting Collection***********")
     client = MongoClient("mongodb+srv://kavaldeep:kavaldeep@cluster0.fgywy.mongodb.net/toDoList?retryWrites=true&w=majority")
     database = client.toDoList
     collection = database["tasks"]
     return collection
+
