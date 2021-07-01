@@ -102,6 +102,10 @@ def ChangeToAFaire(request):
 	TacheATraiter.Etat = "A faire"
 	TacheATraiter.save()
 	json_data = json.dumps({"HTTPRESPONSE":"ok"})
+<<<<<<< HEAD
+=======
+	print("the json data is " + json_data)
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
 	return HttpResponse(json_data)
 
 @csrf_exempt
@@ -112,6 +116,10 @@ def ChangeToFinis(request):
 	TacheATraiter.FinishDate = timezone.now()
 	TacheATraiter.save()
 	json_data = json.dumps({"HTTPRESPONSE":"ok"})
+<<<<<<< HEAD
+=======
+	print("the json data is " + json_data)
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
 	return HttpResponse(json_data)
 
 

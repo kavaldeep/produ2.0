@@ -6,6 +6,12 @@ const box = [enCours , finis , aFaire];
 
 let objectGrabID = null;
 
+<<<<<<< HEAD
+=======
+//Put the url of the server here
+const urlTacheApp = "https://testkavaldeep.azurewebsites.net/tache_app/";
+
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
 //base.addEventListener('dragstart' , dragStart);
 base.addEventListener('dragend'  , dragEnd);
 
@@ -67,13 +73,21 @@ function ChangeToEnCours(pk)
 
 $.ajax({
    type: "POST",
+<<<<<<< HEAD
    url: "http://127.0.0.1:8000/tache_app/updateTaskInProgress/",
+=======
+   url: urlTacheApp + "updateTaskInProgress/",
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
    dataType: "json",
    traditional: true,
    data: {'pk' :pk },
    success: function(data) {
 	   window.location.reload(true);
+<<<<<<< HEAD
            console.log(data["HTTPRESPONSE"]);
+=======
+           console.log( "The Http response is" + data["HTTPRESPONSE"]);
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
    			   }
   });
 }
@@ -83,13 +97,21 @@ function ChangeToAFaire(pk)
 
 $.ajax({
    type: "POST",
+<<<<<<< HEAD
    url: "http://127.0.0.1:8000/tache_app/updateTaskToDo/",
+=======
+   url:  urlTacheApp + "updateTaskToDo/",
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
    dataType: "json",
    traditional: true,
    data: {'pk' :pk },
    success: function(data) {
 	   window.location.reload(true);
+<<<<<<< HEAD
            console.log(data["HTTPRESPONSE"]);
+=======
+           console.log( "The Http response is" + data["HTTPRESPONSE"]);
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
    			   }
   });
 }
@@ -99,13 +121,21 @@ function ChangeToFinis(pk)
 
 $.ajax({
    type: "POST",
+<<<<<<< HEAD
    url: "http://127.0.0.1:8000/tache_app/updateTaskFinish/",
+=======
+   url: urlTacheApp +  "updateTaskFinish/",
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
    dataType: "json",
    traditional: true,
    data: {'pk' :pk },
    success: function(data) {
 	   window.location.reload(true);
+<<<<<<< HEAD
            console.log(data["HTTPRESPONSE"]);
+=======
+           console.log( "The Http response is" + data["HTTPRESPONSE"]);
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
    			   }
   });
 }

@@ -24,9 +24,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f58!h@^c5wjjmdb3mv-1wk$%ihm!#l2zo&q=d=bf2=+q#ns2@5'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+<<<<<<< HEAD
 DEBUG = True
 
 ALLOWED_HOSTS = []
+=======
+DEBUG = True 
+
+ALLOWED_HOSTS = ["*"]
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
 
 
 # Application definition
@@ -37,6 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+<<<<<<< HEAD
+=======
+    'whitenoise.runserver_nostatic',
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
     'django.contrib.staticfiles',
     'tache_app',
     'agile',
@@ -47,6 +57,10 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+<<<<<<< HEAD
+=======
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -139,8 +153,20 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+<<<<<<< HEAD
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+=======
+STATIC_ROOT = os.path.join(BASE_DIR , 'static')
+"""
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+"""
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+>>>>>>> 39d111bf061e4c3e2e8276a0abab7e369a515f83
 
